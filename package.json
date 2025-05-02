@@ -1,0 +1,25 @@
+{
+  "name": "sentiment-app",
+  "version": "1.0.0",
+  "description": "Web app for sentiment analysis using Hugging Face and PostgreSQL",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "keywords": [
+    "node",
+    "express",
+    "postgresql",
+    "ai",
+    "huggingface",
+    "sentiment"
+  ],
+  "author": "skrzyluk",
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "node-fetch": "^3.3.2",
+    "pg": "^8.14.1"
+  }
+}

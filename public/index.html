@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<div id="app" style="display:none;">
+  <!-- cała reszta formularza i tabeli -->
+</div>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sentiment Analysis App</title>
+  <script src="https://cdn.jsdelivr.net/npm/langdetect@1.1.0/langdetect.min.js"></script>
+  <script defer src="script.js"></script>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <h1>Sentiment Analysis (English only)</h1>
+
+  <form id="addTextForm">
+    <input type="text" id="newText" placeholder="Enter an English sentence..." required />
+    <button type="submit">Add & Analyze</button>
+  </form>
+
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Text</th>
+        <th>Sentiment</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody id="textsTable"></tbody>
+  </table>
+  <footer style="margin-top: 40px; text-align: center; color: #888; font-size: 0.9rem;">
+    Made by <strong>skrzyluk</strong> with support from <strong>ChatGPT</strong>
+  </footer>
+ </body>
+</html>
