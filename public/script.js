@@ -16,17 +16,6 @@ async function loadTexts() {
   });
 }
 
-function authorize() {
-  const code = document.getElementById('accessCode').value.trim();
-  if (code.toLowerCase() === '12345') {  // ← zmień na swoje 5-literowe hasło
-    document.getElementById('loginArea').style.display = 'none';
-    document.getElementById('app').style.display = 'block';
-    loadTexts();
-  } else {
-    alert('Invalid access code.');
-  }
-}
-
 async function analyzeText(id) {
   await fetch(`/analyze/${id}`);
   loadTexts();
