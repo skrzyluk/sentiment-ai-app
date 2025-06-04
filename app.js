@@ -143,7 +143,11 @@ async function startServer() {
       const msg = `🚀 Serwer działa: http://localhost:${PORT}`;
       console.log(msg);
       logMessages.push(msg);
-      exec(`start http://localhost:${PORT}`);
+      const platform = process.platform;
+      const opener = platform === 'win32' ? 'start'
+        : platform === 'darwin' ? 'open'
+        : 'xdg-open';
+      exec(`${opener} http://localhost:${PORT}`);
     });
 
   } catch (err) {

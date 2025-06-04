@@ -6,12 +6,27 @@ async function loadTexts() {
 
   texts.forEach(({ id, content, sentiment }) => {
     const tr = document.createElement('tr');
-    tr.innerHTML = `
-      <td>${id}</td>
-      <td>${content}</td>
-      <td class="${sentiment || 'UNKNOWN'}">${sentiment || '–'}</td>
-      <td><button onclick="analyzeText(${id})">Analyze</button></td>
-    `;
+
+    const tdId = document.createElement('td');
+    tdId.textContent = id;
+    tr.appendChild(tdId);
+
+    const tdContent = document.createElement('td');
+    tdContent.textContent = content;
+    tr.appendChild(tdContent);
+
+    const tdSentiment = document.createElement('td');
+    tdSentiment.className = sentiment || 'UNKNOWN';
+    tdSentiment.textContent = sentiment || '–';
+    tr.appendChild(tdSentiment);
+
+    const tdAction = document.createElement('td');
+    const button = document.createElement('button');
+    button.textContent = 'Analyze';
+    button.addEventListener('click', () => analyzeText(id));
+    tdAction.appendChild(button);
+    tr.appendChild(tdAction);
+
     table.appendChild(tr);
   });
 }
@@ -27,13 +42,12 @@ document.getElementById('addTextForm').addEventListener('submit', async (e) => {
   const text = input.value.trim();
   if (!text) return;
 
-  const detected = 'en'; // zakładamy, że zdanie jest po angielsku
-  // const detected = langdetect(text); // ✅ poprawka!
-  // console.log('Detected language:', detected);
-  // if (detected !== 'en') {
-  //   alert('Please enter the sentence in English.');
-  //   return;
-  // }
+  const detected = langdetect(text);
+  console.log('Detected language:', detected);
+  if (detected !== 'en') {
+    alert('Please enter the sentence in English.');
+    return;
+  }
 
   const res = await fetch('/add', {
     method: 'POST',
