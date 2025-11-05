@@ -39,7 +39,7 @@ document.getElementById('addTextForm').addEventListener('submit', async (e) => {
   if (!text) return;
 
   const detected = 'en'; // zakładamy, że zdanie jest po angielsku
-  // const detected = langdetect(text); // ✅ poprawka!
+  // const detected = langdetect(text); // poprawka!
   // console.log('Detected language:', detected);
   // if (detected !== 'en') {
   //   alert('Please enter the sentence in English.');
