@@ -47,7 +47,7 @@ async function startServer() {
         const result = await client.query('SELECT id, content, sentiment FROM texts ORDER BY id DESC LIMIT 10');
         res.json(result.rows);
       } catch (err) {
-        console.error('❌ Błąd SELECT:', err.message);
+        console.error('Błąd SELECT:', err.message);
         res.status(500).json({ error: 'Błąd pobierania danych' });
       }
     });
@@ -55,9 +55,9 @@ async function startServer() {
     // Dodaj tekst
     app.post('/add', async (req, res) => {
       try {
-        console.log('📥 Odebrano żądanie POST /add');
+        console.log('Odebrano żądanie POST /add');
         const { content } = req.body;
-        console.log('✏️ Treść dodana:', content);
+        console.log('Treść dodana:', content);
 
         if (!content || content.trim().length === 0) {
           return res.status(400).json({ error: 'Content cannot be empty' });
@@ -69,10 +69,10 @@ async function startServer() {
         );
 
         const newId = result.rows[0].id;
-        console.log('✅ Nowy ID:', newId);
+        console.log('Nowy ID:', newId);
         res.json({ id: newId });
       } catch (err) {
-        console.error('❌ Błąd dodawania:', err.message);
+        console.error('Błąd dodawania:', err.message);
         res.status(500).json({ error: 'Błąd dodawania: ' + err.message });
       }
     });
@@ -88,7 +88,7 @@ async function startServer() {
         }
 
         const { content } = result.rows[0];
-        console.log(`🧠 Analiza ID=${textId}: "${content}"`);
+        console.log(`Analiza ID=${textId}: "${content}"`);
 
         const hfResponse = await fetch(
           'https://api-inference.huggingface.co/models/nlptown/bert-base-multilingual-uncased-sentiment',
@@ -103,7 +103,7 @@ async function startServer() {
         );
 
         const textResult = await hfResponse.text();
-        console.log('📥 Surowa odpowiedź z API:', textResult);
+        console.log('Surowa odpowiedź z API:', textResult);
 
         let resultAI;
         try {
@@ -118,7 +118,7 @@ async function startServer() {
         if (Array.isArray(resultAI) && resultAI.length > 0 && Array.isArray(resultAI[0])) {
           const sorted = resultAI[0].sort((a, b) => b.score - a.score);
           const best = sorted[0];
-          console.log('🏷️ Najlepszy wynik:', best);
+          console.log('Najlepszy wynik:', best);
 
           const stars = parseInt(best.label);
           if (!isNaN(stars)) {
