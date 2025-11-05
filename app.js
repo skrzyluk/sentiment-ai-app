@@ -11,7 +11,7 @@ app.use(express.static('public'));
 
 const logMessages = [];
 
-// 🔌 Konfiguracja bazy
+// Konfiguracja bazy
 const client = new Client({
   host: process.env.DB_HOST,
   port: process.env.DB_PORT,
@@ -27,7 +27,7 @@ async function startServer() {
     console.log(dbMessage);
     logMessages.push(dbMessage);
 
-    // 🔍 Endpoint główny
+    // Endpoint główny
     app.get('/', (req, res) => {
       const messages = [...logMessages, 'Serwer działa!', `🌐 Port: ${PORT}`];
       res.send(`
@@ -137,7 +137,7 @@ async function startServer() {
       }
     });
 
-    // 🚀 Uruchom serwer
+    // Uruchom serwer
     const { exec } = require('child_process');
     app.listen(PORT, () => {
       const msg = `Serwer działa: http://localhost:${PORT}`;
