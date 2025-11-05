@@ -3,7 +3,7 @@ const { Client } = require('pg');
 require('dotenv').config();
 const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args));
 
-const app = express(); // ✅ Upewniamy się, że app jest zdefiniowane PRZED użyciem
+const app = express(); // Upewniamy się, że app jest zdefiniowane PRZED użyciem
 const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
@@ -23,13 +23,13 @@ const client = new Client({
 async function startServer() {
   try {
     await client.connect();
-    const dbMessage = '✅ Połączono z bazą PostgreSQL.';
+    const dbMessage = 'Połączono z bazą PostgreSQL.';
     console.log(dbMessage);
     logMessages.push(dbMessage);
 
     // 🔍 Endpoint główny
     app.get('/', (req, res) => {
-      const messages = [...logMessages, '✅ Serwer działa!', `🌐 Port: ${PORT}`];
+      const messages = [...logMessages, 'Serwer działa!', `🌐 Port: ${PORT}`];
       res.send(`
         <html>
           <head><title>Logi serwera</title></head>
@@ -41,7 +41,7 @@ async function startServer() {
       `);
     });
 
-    // 📄 Pobierz teksty
+    // Pobierz teksty
     app.get('/texts', async (req, res) => {
       try {
         const result = await client.query('SELECT id, content, sentiment FROM texts ORDER BY id DESC LIMIT 10');
@@ -52,7 +52,7 @@ async function startServer() {
       }
     });
 
-    // ➕ Dodaj tekst
+    // Dodaj tekst
     app.post('/add', async (req, res) => {
       try {
         console.log('📥 Odebrano żądanie POST /add');
@@ -77,7 +77,7 @@ async function startServer() {
       }
     });
 
-    // 🧠 Analiza AI
+    // Analiza AI
     app.get('/analyze/:id', async (req, res) => {
       try {
         const textId = req.params.id;
@@ -109,7 +109,7 @@ async function startServer() {
         try {
           resultAI = JSON.parse(textResult);
         } catch (err) {
-          console.error('❌ Nieprawidłowy JSON z API');
+          console.error('Nieprawidłowy JSON z API');
           return res.status(500).json({ error: 'Model AI zwrócił niepoprawną odpowiedź' });
         }
 
@@ -129,10 +129,10 @@ async function startServer() {
         }
 
         await client.query('UPDATE texts SET sentiment = $1 WHERE id = $2', [label, textId]);
-        console.log(`✅ Zapisano sentyment: ${label}`);
+        console.log(`Zapisano sentyment: ${label}`);
         res.json({ id: textId, sentiment: label });
       } catch (err) {
-        console.error('❌ Błąd analizy:', err.message);
+        console.error('Błąd analizy:', err.message);
         res.status(500).json({ error: 'Błąd podczas analizy: ' + err.message });
       }
     });
@@ -140,14 +140,14 @@ async function startServer() {
     // 🚀 Uruchom serwer
     const { exec } = require('child_process');
     app.listen(PORT, () => {
-      const msg = `🚀 Serwer działa: http://localhost:${PORT}`;
+      const msg = `Serwer działa: http://localhost:${PORT}`;
       console.log(msg);
       logMessages.push(msg);
       exec(`start http://localhost:${PORT}`);
     });
 
   } catch (err) {
-    console.error('❌ Błąd połączenia z bazą danych:', err.stack);
+    console.error('Błąd połączenia z bazą danych:', err.stack);
     process.exit(1);
   }
 }
